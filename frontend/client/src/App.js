@@ -3,14 +3,13 @@ import './App.css';
 import LocationList from './components/LocationList';
 import LocationForm from './components/LocationForm';
 import DeviceList from './components/DeviceList';
-import DeviceForm from './components/DeviceForm';
 
 function App() {
   return (
     <div className="App">
+      <h1>Locations</h1>
       <LocationForm />
       <LocationList />
-      <DeviceForm />
       <DeviceList />
     </div>
   );
