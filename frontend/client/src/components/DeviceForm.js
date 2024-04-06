@@ -17,9 +17,9 @@ function DeviceForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="Serial Number" value={serialNumber} onChange={(e) => setSerialNumber(e.target.value)} />
-      <input type="text" placeholder="Type" value={type} onChange={(e) => setType(e.target.value)} />
-      <input type="text" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)} />
+      <label>Serial Number: </label><input type="text" placeholder="Serial Number" value={serialNumber} onChange={(e) => setSerialNumber(e.target.value)} /><br></br>
+      <label>Type: </label><input type="text" placeholder="Type" value={type} onChange={(e) => setType(e.target.value)} /><br></br>
+      <label>Status: </label><input type="text" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)} /><br></br>
       <button type="submit">Add Device</button>
     </form>
   );
