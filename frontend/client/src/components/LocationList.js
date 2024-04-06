@@ -14,7 +14,7 @@ function LocationList() {
 
   return (
     <div>
-      <h1>Locations</h1>
+      <h2>Locations List</h2>
       <ul>
         {locations.map(location => (
           <li key={location._id}>
