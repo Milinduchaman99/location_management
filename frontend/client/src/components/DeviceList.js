@@ -14,7 +14,7 @@ function DeviceList() {
 
   return (
     <div>
-      <h1>Devices</h1>
+      <h2>Device List</h2>
       <ul>
         {devices.map(device => (
           <li key={device._id}>
