@@ -12,7 +12,12 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Add new location
+// Get a single location
+router.get('/:id', getLocation, (req, res) => {
+  res.json(res.location);
+});
+
+// Create a location
 router.post('/', async (req, res) => {
   const location = new Location(req.body);
   try {
@@ -23,6 +28,50 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Other CRUD operations...
+// Update a location
+router.patch('/:id', getLocation, async (req, res) => {
+  if (req.body.name != null) {
+    res.location.name = req.body.name;
+  }
+  if (req.body.address != null) {
+    res.location.address = req.body.address;
+  }
+  if (req.body.phone != null) {
+    res.location.phone = req.body.phone;
+  }
+  try {
+    const updatedLocation = await res.location.save();
+    res.json(updatedLocation);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// Delete a location
+router.delete('/:id', getLocation, async (req, res) => {
+  try {
+    await res.location.remove();
+    res.json({ message: 'Deleted location' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Middleware function to get location by ID
+async function getLocation(req, res, next) {
+  let location;
+  try {
+    location = await Location.findById(req.params.id);
+    if (location == null) {
+      return res.status(404).json({ message: 'Location not found' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+
+  res.location = location;
+  next();
+}
 
 module.exports = router;
+
