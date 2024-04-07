@@ -11,8 +11,6 @@ function App() {
       <LocationForm />
       <LocationList />
       <DeviceList />
-      <button type="submit">Update Device</button>
-      <button type="submit">Delete Device</button>
     </div>
   );
 }
