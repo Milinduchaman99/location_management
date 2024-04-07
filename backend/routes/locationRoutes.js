@@ -48,7 +48,7 @@ router.patch('/:id', getLocation, async (req, res) => {
 });
 
 // Delete a location
-router.delete('/:id', getLocation, async (req, res) => {
+router.delete('/:_id', getLocation, async (req, res) => {
   try {
     await res.location.remove();
     res.json({ message: 'Deleted location' });
