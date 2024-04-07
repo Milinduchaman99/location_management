@@ -28,6 +28,23 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Handle image upload
+router.post('/upload', async (req, res) => {
+  try {
+    const { data, contentType } = req.body;
+    const device = new Device({
+      image: {
+        data: Buffer.from(data, 'base64'), // Convert base64 string to buffer
+        contentType: contentType,
+      },
+    });
+    const savedDevice = await device.save();
+    res.status(201).json(savedDevice);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 // Update a device
 router.patch('/:id', getDevice, async (req, res) => {
   if (req.body.serialNumber != null) {
