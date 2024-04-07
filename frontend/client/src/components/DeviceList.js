@@ -18,7 +18,7 @@ function DeviceList() {
       <ul>
         {devices.map(device => (
           <li key={device._id}>
-            {device.serialNumber} - {device.type}
+            {device.serialNumber} - {device.type} - {device.image} - {device.status}
           </li>
         ))}
       </ul>
