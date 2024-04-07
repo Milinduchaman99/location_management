@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ApiService from '../services/ApiService';
-//import DeviceForm from './DeviceForm';
 
 function LocationForm() {
   const [name, setName] = useState('');
@@ -10,9 +9,9 @@ function LocationForm() {
   const [image, setImage] = useState(null);
   const [type, setType] = useState('');
   const [status, setStatus] = useState('');
+  const [imageURL, setImageURL] = useState('');
 
-  const handleLocationSubmit = async (e) => {
-    e.preventDefault();
+  const handleLocationSubmit = async () => {
     const locationData = { name, address, phone };
     await ApiService.createLocation(locationData);
     setName('');
@@ -20,19 +19,39 @@ function LocationForm() {
     setPhone('');
   };
 
-  const handleDeviceSubmit = async (e) => {
-    e.preventDefault();
-    const deviceData = { serialNumber, image, type, status };
+  const handleDeviceSubmit = async () => {
+    const deviceData = { serialNumber, imageURL, type, status };
     await ApiService.createDevice(deviceData);
     setSerialNumber('');
     setImage(null);
     setType('');
     setStatus('');
+    setImageURL(''); // Clear the image URL after submission
   };
 
   const handleSubmit = async (e) => {
-    await handleLocationSubmit(e);
-    await handleDeviceSubmit(e);
+    e.preventDefault();
+    if (image) {
+      await uploadImage(); // Upload image before submitting device data
+    }
+    await handleLocationSubmit();
+    await handleDeviceSubmit();
+  };
+
+  const uploadImage = async () => {
+    const formData = new FormData();
+    formData.append('image', image);
+
+    try {
+      const response = await fetch('/api/devices/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      setImageURL(data.imageUrl); // Assuming server returns image URL after upload
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
   };
 
   const handleImageChange = (e) => {
